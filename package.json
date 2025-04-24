@@ -1,0 +1,35 @@
+{
+  "name": "zhiliantujie-desktop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^35.2.1",
+    "electron-builder": "^24.13.2"
+  },
+"build": {
+  "productName": "智链图解",
+  "appId": "com.sxrjhc.zhiliantujie",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "**/*"
+  ],
+  "mac": {
+    "target": "dmg",
+    "icon": "icon.icns"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "icon.ico"
+  }
+}
+}
