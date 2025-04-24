@@ -2,40 +2,38 @@ name: Build Cross-Platform Desktop App
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        platform: [mac, win, linux]
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        include:
+          - os: macos-latest
+            platform: mac
+          - os: windows-latest
+            platform: win
+          - os: ubuntu-latest
+            platform: linux
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build app for ${{ matrix.platform }}
-        run: |
-          if [ "${{ matrix.platform }}" = "mac" ]; then
-            npm run dist
-          elif [ "${{ matrix.platform }}" = "win" ]; then
-            npm run dist -- --win
-          elif [ "${{ matrix.platform }}" = "linux" ]; then
-            npm run dist -- --linux
-          fi
+      - name: Build Application
+        run: npm run dist
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: ${{ matrix.platform }}-installer
           path: dist/
