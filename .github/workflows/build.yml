@@ -1,0 +1,41 @@
+name: Build Cross-Platform Desktop App
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        platform: [mac, win, linux]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app for ${{ matrix.platform }}
+        run: |
+          if [ "${{ matrix.platform }}" = "mac" ]; then
+            npm run dist
+          elif [ "${{ matrix.platform }}" = "win" ]; then
+            npm run dist -- --win
+          elif [ "${{ matrix.platform }}" = "linux" ]; then
+            npm run dist -- --linux
+          fi
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.platform }}-installer
+          path: dist/
