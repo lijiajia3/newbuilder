@@ -14,22 +14,23 @@
     "electron": "^35.2.1",
     "electron-builder": "^24.13.2"
   },
-"build": {
-  "productName": "智链图解",
-  "appId": "com.sxrjhc.zhiliantujie",
-  "directories": {
-    "output": "dist"
-  },
-  "files": [
-    "**/*"
-  ],
-  "mac": {
-    "target": "dmg",
-    "icon": "icon.icns"
-  },
-  "win": {
-    "target": "nsis",
-    "icon": "icon.ico"
+  "build": {
+    "publish": null,
+    "productName": "智链图解",
+    "appId": "com.sxrjhc.zhiliantujie",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "icon.icns"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    }
   }
-}
 }
